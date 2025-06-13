@@ -1,6 +1,6 @@
 const pool = require("../config/db");
 require("dotenv").config();
-const bcrypt=require('bcrypt');
+const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken')
 const cookie=require('cookie-parser')
 const User=require('../models/userModal.js')
