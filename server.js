@@ -6,7 +6,7 @@ const db = require('./config/db');
 const app=express();
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:5173",  // Allow only frontend on port 3000
+    origin: ["http://localhost:5173",'https://blogverse-tau.vercel.app/'],  // Allow only frontend on port 3000
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
     credentials: true, // Allow sending cookies (if needed)
 }));
