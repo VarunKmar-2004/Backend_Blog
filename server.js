@@ -1,26 +1,41 @@
-require('dotenv').config();
-const express=require('express');
-const cookieParser = require("cookie-parser"); 
-const cors = require('cors');
-const db = require('./config/db');
-const app=express();
+import dotenv from 'dotenv';
+dotenv.config();
+
+import express from 'express';
+import cookieParser from 'cookie-parser'; 
+import cors from 'cors';
+import { connectDB } from './config/db.js';
+
+const app = express();
+
+// ✅ Middlewares
 app.use(cookieParser());
 app.use(cors({
-    origin: ["http://localhost:5173",'https://blogverse-tau.vercel.app'],  // Allow only frontend on port 3000
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
-    credentials: true, // Allow sending cookies (if needed)
+    origin: ["http://localhost:5173", "https://blogverse-tau.vercel.app"], 
+    methods: ["GET", "POST", "PUT", "DELETE"], 
+    credentials: true, 
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
-const getRoutes=require('./routes/GetRoutes.js');
-const userRoutes=require('./routes/userRoutes.js');
-const postRoutes=require('./routes/postRoutes.js');
-app.get('/',(req,res)=>{
-    res.send('Hello World!');
-})
-app.use('/api/home',getRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/users",postRoutes);
-app.listen(5000,()=>{
-   console.log("server running successfully");
-})
+
+// ✅ Routes
+import getRoutes from './routes/GetRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import postRoutes from './routes/postRoutes.js';
+
+app.get('/', (req, res) => {
+    res.send('Hello World with MongoDB!');
+});
+
+app.use('/api/home', getRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
+
+// ✅ Connect DB and Start Server
+const PORT = process.env.PORT || 5000;
+
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on port ${PORT}`);
+    });
+});

@@ -1,13 +1,13 @@
-const express = require("express");
-const multer=require('multer')
+import express from 'express'
+import multer from 'multer'
 const upload=multer()
-const { registerUser, userLogin, userLogout } = require("../controllers/userController");
+import { registerUser, userLogin, userLogout } from  "../controllers/userController.js";
 
-const uploadMiddleware = require("../middlewares/uploadMiddleware");
+import uploadMiddleware from "../middlewares/uploadMiddleware.js";
 
 const router = express.Router();
 
 router.post("/register", uploadMiddleware, registerUser);
 router.post('/login',upload.none(),userLogin);
 router.post('/logout',userLogout);
-module.exports = router;
+export default router

@@ -1,11 +1,12 @@
-const multer = require("multer");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const cloudinary = require("../config/cloudinary");
+import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import {cloudinary} from "../config/cloudinary.js";
 
+// ✅ Storage configuration
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
+  cloudinary,
   params: {
-    folder: "profile_picture",
+    folder: "profile_picture", // Folder in Cloudinary
     allowed_formats: ["jpg", "png", "jpeg"],
     transformation: [{ width: 500, height: 500, crop: "limit" }],
   },
@@ -13,6 +14,7 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
+// ✅ Middleware
 const uploadMiddleware = (req, res, next) => {
   console.log("🟢 Incoming Request:", req.method, req.url);
   console.log("🟢 Headers:", req.headers);
@@ -25,9 +27,10 @@ const uploadMiddleware = (req, res, next) => {
       return res.status(400).json({ error: "File upload failed" });
     }
 
-    console.log("✅ Uploaded File:", req.file); // Check if file is available
+    console.log("✅ Uploaded File:", req.file); // Cloudinary file info
     next();
   });
 };
 
-module.exports = uploadMiddleware;
+// ✅ Default export
+export default uploadMiddleware;

@@ -1,15 +1,9 @@
-require("dotenv").config();
-const mysql=require("mysql2/promise")
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-    connectTimeout: 5*60*1000, // 3 min
-    enableKeepAlive: true,
-  });
-  module.exports = pool;
+import mongoose from 'mongoose'
+export const connectDB=async()=>{
+  try{
+    const conn=await mongoose.connect(process.env.MONGO_URI);
+    console.log('Database Connected Successfully')
+  }catch(error){
+    console.log('something error occured:',error)
+  }
+}

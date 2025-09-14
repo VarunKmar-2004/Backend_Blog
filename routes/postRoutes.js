@@ -1,7 +1,6 @@
-const express = require("express");
-const UserId = require("../middlewares/UserId");
-const newPost = require("../controllers/PostController");
-const uploadPost=require('../middlewares/uploadPost')
+import express from 'express';
+import {newPost} from '../controllers/PostController.js'
+import {uploadPost} from '../middlewares/uploadPost.js'
 const router=express.Router();
 router.post('/newposts',uploadPost,newPost);
-module.exports=router;
+export default router;
