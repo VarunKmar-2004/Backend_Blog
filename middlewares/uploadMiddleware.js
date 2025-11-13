@@ -21,7 +21,8 @@ const uploadMiddleware = (req, res, next) => {
   console.log("🟢 Body:", req.body);
   console.log("🟢 Files:", req.files);
 
-  upload.single("profile_picture")(req, res, function (err) {
+  upload.single("profile_picture");
+  (req, res, function (err) {
     if (err) {
       console.error("🔴 Multer Error:", err);
       return res.status(400).json({ error: "File upload failed" });
